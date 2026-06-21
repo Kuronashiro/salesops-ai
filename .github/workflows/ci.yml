@@ -31,7 +31,7 @@ jobs:
           npm run build
 
       - name: Build Dashboard
-        working-directory: apps/api/dashboard
+        working-directory: apps/web/dashboard
         run: |
           npm install
           npm run build

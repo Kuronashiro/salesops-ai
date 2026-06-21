@@ -1,0 +1,49 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  productName String
+  qty         Int
+  price       Int
+  amount      Int
+
+  location    String
+  condition   String
+
+  platform    String
+  customer    String?
+
+  rating      Int?
+
+  soldDate    DateTime?
+
+  createdAt   DateTime @default(now())
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  action    String
+  endpoint  String
+  method    String
+
+  details   String?
+
+  createdAt DateTime @default(now())
+}

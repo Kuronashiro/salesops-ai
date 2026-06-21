@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:15
+    container_name: salesops-db
+
+    environment:
+      POSTGRES_DB: salesops
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    container_name: salesops-api
+
+    build:
+      context: ./apps/api/api
+      dockerfile: ../Dockerfile
+
+    ports:
+      - "3001:3001"
+
+    depends_on:
+      - db
+
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/salesops
+
+  dashboard:
+    container_name: salesops-dashboard
+
+    build:
+      context: ./apps/web/dashboard
+      dockerfile: Dockerfile
+
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:

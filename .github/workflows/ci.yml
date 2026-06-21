@@ -25,13 +25,13 @@ jobs:
           node-version: 20
 
       - name: Build API
-        working-directory: apps/api
+        working-directory: apps/api/api
         run: |
           npm install
           npm run build
 
       - name: Build Dashboard
-        working-directory: apps/web/dashboard
+        working-directory: apps/api/dashboard
         run: |
           npm install
           npm run build
